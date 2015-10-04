@@ -1,5 +1,6 @@
 ;interface.au3
 
+; Interface principal
 Global $Main = GUICreate("Custom Settings",684,375,-1,-1,-1,-1)
 Global $tab = GUICtrlCreatetab(218,10,389,358,-1,-1)
 GuiCtrlSetState(-1,2048)
@@ -20,5 +21,25 @@ Global $LstViewFastMode = GUICtrlCreatelistview("",228,40,362,318,-1,$WS_EX_CLIE
 _GUICtrlListView_InsertColumn($LstViewFastMode, 0, "Paramètre", 300)
 _GUICtrlListView_InsertColumn($LstViewFastMode, 1, "Valeur", 58)
 GUICtrlCreateTabItem("")
-Global $LstFastMode = GUICtrlCreatelist("",10,9,200,357,-1,$WS_EX_CLIENTEDGE)
+Global $LstSettings = GUICtrlCreatelist("",10,9,200,357,-1,$WS_EX_CLIENTEDGE)
 _GUICtrlTab_SetCurFocus($tab,0)
+
+; Fenêtre de savegarde de settings
+Func Save()
+	$Save = GUICreate("Save",170,100,-1,-1,-1,$WS_EX_TOPMOST)
+	$TxtNomSettings = GUICtrlCreateInput("",10,31,150,20,-1,$WS_EX_CLIENTEDGE)
+	GUICtrlCreateLabel("Nom du settings :",10,10,87,15,-1,-1)
+	GUICtrlSetBkColor(-1,"-2")
+	$BtnEnregistrer = GUICtrlCreateButton("Enregistrer",10,59,150,30,-1,-1)
+	
+	While 1
+		$nMsg = GUIGetMsg()
+
+		Switch $nMsg
+			Case $GUI_EVENT_CLOSE
+				Exit
+			Case $BtnEnregistrer
+				
+		EndSwitch
+	WEnd
+EndFunc

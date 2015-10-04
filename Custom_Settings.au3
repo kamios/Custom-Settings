@@ -7,6 +7,7 @@
 #include <WindowsConstants.au3>
 #Include <GuiButton.au3>
 #include <GuiListView.au3>
+#include <GuiListBox.au3>
 #include <GuiTab.au3>
 #include <ListBoxConstants.au3>
 #include <EditConstants.au3>
@@ -26,8 +27,8 @@ AjoutLog("Langue OS : " & _GetOSLanguage())
 If FileExists($SettingsIni) = 0 Then
 	_FileCreate($SettingsIni) ; Sinon on le créé
 	; On met les valeurs par défaut pour la création du fichier
-	iniwrite($SettingsIni, "BotParameters","AvoidanceSettings","Defaut")
-	iniwrite($SettingsIni, "BotParameters","FastModeSettings","Defaut")
+	iniwrite($SettingsIni, "BotParameters","Settings","Defaut")
+	IniWriteSection($SettingsIni, "Settings", "1=Defaut")
 	AjoutLog("Fichier settings crée !")
 Else
 	AjoutLog("Fichier settings : OK")
@@ -42,14 +43,17 @@ Else
 	Exit
 EndIf
 
-
+; On lit settings.ini pour recupérer toute les clés de la section settings
+Local $READ = IniReadSection($SettingsIni, "Settings")
+For $x = 1 To $READ[0][0]
+   GUICtrlSetData($LstSettings, $READ[$x][1])
+Next
 
 ; On remplit les deux listView
-Local $AvoidanceSettings = IniRead($SettingsIni, "BotParameters", "AvoidanceSettings", "none")
-Local $FastModeSettings = IniRead($SettingsIni, "BotParameters", "FastModeSettings", "none")
-LectureFastModeIni($DossierSettingsIni & "FastMode_" & $FastModeSettings & ".ini")
+Local $Settings = IniRead($SettingsIni, "BotParameters", "Settings", "none")
+LectureFastModeIni($DossierSettingsIni & "FastMode_" & $Settings & ".ini")
 RemplirFastModeIni()
-LectureAvoidanceIni($DossierSettingsIni & "Avoidance_" & $AvoidanceSettings & ".ini")
+LectureAvoidanceIni($DossierSettingsIni & "Avoidance_" & $Settings & ".ini")
 RemplireAvoidanceIni()
 
 ; Affichage GUI
@@ -66,5 +70,19 @@ $nMsg = GUIGetMsg()
 			
 		Case $BrnSave
 			
+		Case $LstSettings
+			; On vide les deux ListView
+			_GUICtrlListView_DeleteAllItems($LstViewFastMode)
+			_GUICtrlListView_DeleteAllItems($LstViewAvoidance)
+			AjoutLog("On vide les deux ListView")
+			; On récupère le text sélectionné de la ListBox
+			Local $SelecSettings = GUICtrlRead($LstSettings, $GUI_READ_EXTENDED)
+			AjoutLog("Settings : " & $SelecSettings & " sélectionné !")
+			; On rempli en fonction de la lecture de la ListBox
+			LectureFastModeIni($DossierSettingsIni & "FastMode_" & $SelecSettings & ".ini")
+			RemplirFastModeIni()
+			LectureAvoidanceIni($DossierSettingsIni & "Avoidance_" & $SelecSettings & ".ini")
+			RemplireAvoidanceIni()
+
 	EndSwitch
 WEnd

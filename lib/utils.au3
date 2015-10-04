@@ -11,6 +11,7 @@ Func LectureFastModeIni($CheminFichier)
 	$WardenWeight = IniRead($CheminFichier, "BotParameters", "Warden weight", "none")
 	$GoblinWeight = IniRead($CheminFichier, "BotParameters", "Goblin weight", "none")
 	$NormalMonsterWeight = IniRead($CheminFichier, "BotParameters", "Normal monster weight", "none")
+	AjoutLog("Lecture fichier : " & $CheminFichier)
 EndFunc;==>LectureIni
 
 Func RemplirFastModeIni()
@@ -24,6 +25,7 @@ Func RemplirFastModeIni()
 	GUICtrlCreateListViewItem("Warden weight" & "|" & $WardenWeight,$LstViewFastMode)
 	GUICtrlCreateListViewItem("Goblin weight" & "|" & $GoblinWeight,$LstViewFastMode)
 	GUICtrlCreateListViewItem("Normal monster weight" & "|" & $NormalMonsterWeight,$LstViewFastMode)
+	AjoutLog("LstViewFastMode remplie")
 EndFunc;==>RemplirFastModeIni
 
 Func LectureAvoidanceIni($CheminFichier)
@@ -92,7 +94,7 @@ Func LectureAvoidanceIni($CheminFichier)
 	
 	$DeactivateUnderConduit = IniRead($CheminFichier, "BotParameters", "DeactivateUnderConduit", "none")
 	$DeactivateUnderShield = IniRead($CheminFichier, "BotParameters", "DeactivateUnderShield", "none")
-	
+	AjoutLog("Lecture fichier : " & $CheminFichier)
 EndFunc;==>LectureAvoidanceIni
 
 Func RemplireAvoidanceIni()
@@ -182,6 +184,7 @@ Func RemplireAvoidanceIni()
 	GUICtrlCreateListViewItem("--------------------------------------------------",$LstViewAvoidance)
 	GUICtrlCreateListViewItem("DeactivateUnderConduit" & "|" & $DeactivateUnderConduit,$LstViewAvoidance)
 	GUICtrlCreateListViewItem("DeactivateUnderShield" & "|" & $DeactivateUnderShield,$LstViewAvoidance)
+	AjoutLog("LstViewFastMode remplie")
 EndFunc;==>RemplireAvoidanceIni
 
 ; Ajout de log
