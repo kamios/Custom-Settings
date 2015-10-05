@@ -1,5 +1,13 @@
 ;utils.au3
 
+Func LectureSettingsIni()
+	; On lit settings.ini pour recupérer toute les clés de la section settings
+	Local $READ = IniReadSection($SettingsIni, "Settings")
+	For $x = 1 To $READ[0][0]
+		GUICtrlSetData($LstSettings, $READ[$x][1])
+	Next
+EndFunc
+
 ;Lecture des fichiers RosBotAvoidanceSettings.ini et RosBotFastModeSettings.ini
 Func LectureFastModeIni($CheminFichier)
 	$FastModeTolerance = IniRead($CheminFichier, "BotParameters", "Fast mode tolerance", "none")

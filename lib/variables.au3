@@ -11,6 +11,7 @@ Global $AvoidanceDefaut = $DossierSettingsIni & "RosBotAvoidanceSettings_Defaut.
 Global $FastModeDefaut = $DossierSettingsIni & "RosBotFastModeSettings_Defaut.ini"
 Global $AvoidanceIni = @MyDocumentsDir & "\RoS-BoT\RosBotAvoidanceSettings.ini"
 Global $FastModeIni = @MyDocumentsDir & "\RoS-BoT\RosBotFastModeSettings.ini"
+Global $NomSettings = ""
 
 ;Fast Mode
 Global $FastModeTolerance = 0

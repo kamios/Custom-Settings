@@ -37,14 +37,22 @@ Func Save()
 	GUICtrlSetBkColor(-1,"-2")
 	$BtnEnregistrer = GUICtrlCreateButton("Enregistrer",10,59,150,30,-1,-1)
 	
+	; Affichage GUI
+	GUISetState(@SW_SHOW, $Save)
+	AjoutLog("Ouverture de la fenêtre Save !")
 	While 1
 		$nMsg = GUIGetMsg()
 
 		Switch $nMsg
 			Case $GUI_EVENT_CLOSE
-				Exit
+				AjoutLog("Fermeture de la fenêtre Save !")
+				GUIDelete($Save)
+				ExitLoop
 			Case $BtnEnregistrer
-				
+				$NomSettings = GUICtrlRead($TxtNomSettings)
+				AjoutLog("Fermeture de la fenêtre Save ($NomSettings modifié)!")
+				GUIDelete($Save)
+				ExitLoop
 		EndSwitch
 	WEnd
 EndFunc

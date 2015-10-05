@@ -43,11 +43,7 @@ Else
 	Exit
 EndIf
 
-; On lit settings.ini pour recupérer toute les clés de la section settings
-Local $READ = IniReadSection($SettingsIni, "Settings")
-For $x = 1 To $READ[0][0]
-   GUICtrlSetData($LstSettings, $READ[$x][1])
-Next
+LectureSettingsIni()
 
 ; On remplit les deux listView
 Local $Settings = IniRead($SettingsIni, "BotParameters", "Settings", "none")
@@ -85,8 +81,21 @@ $nMsg = GUIGetMsg()
 				AjoutLog("Chargement du settings : " & $SelecSettings & " !")
 			EndIf
 		Case $BrnSave
+			; On vide la variable
+			$NomSettings = ""
 			; On sauvegarde RosBotAvoidanceSettings.ini et RosBotFastModeSettings.ini du dossier RoS-BoT
-			
+			Save()
+			FileCopy($FastModeIni, $DossierSettingsIni & "FastMode_" & $NomSettings & ".ini")
+			FileCopy($AvoidanceIni, $DossierSettingsIni & "Avoidance_" & $NomSettings & ".ini")
+			AjoutLog("Sauvegarde RosBotAvoidanceSettings.ini et RosBotFastModeSettings.ini du dossier RoS-BoT !")
+			GUICtrlSetState($ImgTemoin1, $GUI_SHOW)
+			GUICtrlSetState($ImgTemoin2, $GUI_HIDE)
+			; On ajoute ce settings au fichier settings.ini
+			Dim $Var = IniReadSection($SettingsIni, "Settings")
+			$NbSections = $Var[0][0]
+			$NbSections += 1
+			iniwrite($SettingsIni, "Settings", $NbSections, $NomSettings)
+			LectureSettingsIni()
 		Case $BtnDeleted
 			; On supprime le settings et les fichiers correspondant
 			
