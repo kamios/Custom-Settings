@@ -67,8 +67,29 @@ $nMsg = GUIGetMsg()
 		Case $BtnLog
 			CreerFichierLogs ()
 		Case $BtnLoad
+			Local $SelecSettings = ""
+			; On récupère le text sélectionné de la ListBox
+			$SelecSettings = GUICtrlRead($LstSettings, $GUI_READ_EXTENDED)
 			
+			If $SelecSettings = "" Then
+				GUICtrlSetState($ImgTemoin1, $GUI_HIDE)
+				GUICtrlSetState($ImgTemoin2, $GUI_SHOW)
+				MsgBox(16, "Erreur", "Ancuns Settings de sélectionnés !", 3)
+				AjoutLog("Pas de chargement : Ancuns Settings de sélectionnés !")
+			Else
+				; On charge nos fichiers *.ini dans le dossier RoS-BoT
+				FileCopy($DossierSettingsIni & "FastMode_" & $SelecSettings & ".ini", $FastModeIni, $FC_OVERWRITE + $FC_CREATEPATH)
+				FileCopy($DossierSettingsIni & "Avoidance_" & $SelecSettings & ".ini", $AvoidanceIni, $FC_OVERWRITE + $FC_CREATEPATH)
+				GUICtrlSetState($ImgTemoin1, $GUI_SHOW)
+				GUICtrlSetState($ImgTemoin2, $GUI_HIDE)
+				AjoutLog("Chargement du settings : " & $SelecSettings & " !")
+			EndIf
 		Case $BrnSave
+			; On sauvegarde RosBotAvoidanceSettings.ini et RosBotFastModeSettings.ini du dossier RoS-BoT
+			
+		Case $BtnDeleted
+			; On supprime le settings et les fichiers correspondant
+			
 			
 		Case $LstSettings
 			; On vide les deux ListView
